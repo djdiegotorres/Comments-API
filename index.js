@@ -53,3 +53,8 @@ app.get('/api/comment/list/:content_id', async (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 API rodando em http://localhost:${port}`);
 });
+
+//Rota de Healthcheck
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
