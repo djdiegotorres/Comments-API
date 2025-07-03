@@ -1,9 +1,14 @@
 FROM node:18
+
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
+
 COPY . .
+
+RUN chmod +x start.sh
+
 EXPOSE 3000
 
-# Adiciona o comando de migration antes de rodar a app
-CMD npx knex migrate:latest && node index.js
+CMD ["./start.sh"]
