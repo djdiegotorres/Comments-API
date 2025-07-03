@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('./db');
 const app = express();
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
 const port = 3000;
 
 app.use(express.json());
@@ -57,4 +59,13 @@ app.listen(port, () => {
 //Rota de Healthcheck
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
+// Coleta métricas padrão (CPU, RAM, etc)
+collectDefaultMetrics();
+
+// Exponha as métricas na rota /metrics
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
 });

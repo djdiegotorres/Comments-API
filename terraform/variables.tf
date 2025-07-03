@@ -7,7 +7,7 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "Nome da chave SSH"
+  description = "devops-test"
 }
 
 variable "ami_id" {
